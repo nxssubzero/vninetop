@@ -802,6 +802,7 @@ function ModalComponent({
                                         "Applied constraints successfully. New constraints:",
                                         track.getConstraints()
                                     );
+                                    logger.info("Actual capture settings:", track.getSettings());
                                 } catch (e) {
                                     logger.error("Failed to apply constraints.", e);
                                 }
