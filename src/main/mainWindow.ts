@@ -17,6 +17,7 @@ import {
 } from "electron";
 import { join } from "path";
 import { IpcCommands, IpcEvents } from "shared/IpcEvents";
+import { STATIC_DIR } from "shared/paths";
 import { isTruthy } from "shared/utils/guards";
 import { once } from "shared/utils/once";
 import type { SettingsStore } from "shared/utils/SettingsStore";
@@ -331,6 +332,7 @@ function buildBrowserWindowOptions(): BrowserWindowConstructorOptions {
             // disable renderer backgrounding to prevent the app from unloading when in the background
             backgroundThrottling: false
         },
+        icon: join(STATIC_DIR, "icon.png"),
         frame: !noFrame,
         autoHideMenuBar: enableMenu,
         ...getWindowBoundsOptions()

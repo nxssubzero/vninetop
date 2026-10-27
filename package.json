@@ -196,7 +196,9 @@
             ]
         },
         "publish": {
-            "provider": "github"
+            "provider": "github",
+            "owner": "nxssubzero",
+            "repo": "vninetop"
         },
         "rpm": {
             "fpm": [

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, Notification } from "electron";
 import { autoUpdater, UpdateInfo } from "electron-updater";
 import { join } from "path";
 import { IpcEvents, UpdaterIpcEvents } from "shared/IpcEvents";
@@ -17,22 +17,23 @@ import { loadView } from "./vesktopStatic";
 
 let updaterWindow: BrowserWindow | null = null;
 
-autoUpdater.on("update-available", update => {
-    if (State.store.updater?.ignoredVersion === update.version) return;
-    if ((State.store.updater?.snoozeUntil ?? 0) > Date.now()) return;
-
-    openUpdater(update);
+// Updates are downloaded silently in the background and applied the next time Kernel is closed
+autoUpdater.on("update-downloaded", update => {
+    new Notification({
+        title: "Kernel updated",
+        body: `Version ${update.version} will be installed next time you close Kernel.`
+    }).show();
 });
-
-autoUpdater.on("update-downloaded", () => setTimeout(() => autoUpdater.quitAndInstall(), 100));
 autoUpdater.on("download-progress", p =>
     updaterWindow?.webContents.send(UpdaterIpcEvents.DOWNLOAD_PROGRESS, p.percent)
 );
 autoUpdater.on("error", err => updaterWindow?.webContents.send(UpdaterIpcEvents.ERROR, err.message));
 
-autoUpdater.autoDownload = false;
-autoUpdater.autoInstallOnAppQuit = false;
+autoUpdater.autoDownload = true;
+autoUpdater.autoInstallOnAppQuit = true;
 autoUpdater.fullChangelog = true;
+
+setInterval(() => autoUpdater.checkForUpdates().catch(() => {}), 30 * Millis.MINUTE);
 
 const isOutdated = autoUpdater.checkForUpdates().then(res => Boolean(res?.isUpdateAvailable));
 
