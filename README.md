@@ -1,6 +1,6 @@
-# Vesktop
+# Kernel
 
-Vesktop is a custom Discord desktop app
+Kernel is a custom Discord desktop app
 
 **Main features**:
 - Vencord preinstalled

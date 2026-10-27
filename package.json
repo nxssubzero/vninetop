@@ -2,7 +2,7 @@
     "name": "vesktop",
     "version": "1.6.5",
     "private": true,
-    "description": "Vesktop is a custom Discord desktop app",
+    "description": "Kernel is a custom Discord desktop app",
     "keywords": [],
     "homepage": "https://vencord.dev/",
     "license": "GPL-3.0-or-later",
@@ -67,8 +67,8 @@
     },
     "build": {
         "appId": "dev.vencord.vesktop",
-        "productName": "Vesktop",
-        "executableName": "vesktop",
+        "productName": "Kernel",
+        "executableName": "kernel",
         "files": [
             "!*",
             "!node_modules",
@@ -121,13 +121,13 @@
             ],
             "desktop": {
                 "entry": {
-                    "Name": "Vesktop",
+                    "Name": "Kernel",
                     "GenericName": "Internet Messenger",
                     "Type": "Application",
                     "Categories": "Network;InstantMessaging;Chat;",
                     "Keywords": "discord;vencord;electron;chat;",
                     "MimeType": "x-scheme-handler/discord",
-                    "StartupWMClass": "vesktop"
+                    "StartupWMClass": "kernel"
                 }
             }
         },
