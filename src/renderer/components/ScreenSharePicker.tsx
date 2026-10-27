@@ -766,11 +766,23 @@ function ModalComponent({
                                 ...settings
                             });
 
-                            setTimeout(async () => {
+                            // The stream connection only exists some time after submitting and Discord applies
+                            // its own (Nitro default) quality once it does, so keep retrying until it shows up.
+                            const applyQuality = async (attempt = 0) => {
                                 const conn = [...MediaEngineStore.getMediaEngine().connections].find(
                                     connection => connection.streamUserId === UserStore.getCurrentUser().id
                                 );
-                                if (!conn) return;
+                                if (!conn?.input?.stream) {
+                                    if (attempt < 20) setTimeout(() => applyQuality(attempt + 1), 500);
+                                    return;
+                                }
+
+                                const params = conn.videoStreamParameters?.[0];
+                                if (params) {
+                                    params.maxFrameRate = frameRate;
+                                    params.maxResolution.height = height;
+                                    params.maxResolution.width = width;
+                                }
 
                                 const track = conn.input.stream.getVideoTracks()[0];
 
@@ -793,7 +805,8 @@ function ModalComponent({
                                 } catch (e) {
                                     logger.error("Failed to apply constraints.", e);
                                 }
-                            }, 100);
+                            };
+                            setTimeout(applyQuality, 100);
                         } catch (error) {
                             logger.error("Error while submitting stream.", error);
                         }
