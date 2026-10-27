@@ -78,6 +78,11 @@ function init() {
     disabledFeatures.add("HardwareMediaKeyHandling");
     disabledFeatures.add("MediaSessionService");
 
+    if (process.platform === "darwin") {
+        // allow sharing system audio together with the screen on macOS
+        enabledFeatures.add("MacLoopbackAudioForScreenShare");
+    }
+
     if (isLinux) {
         // Support TTS on Linux using https://wiki.archlinux.org/title/Speech_dispatcher
         app.commandLine.appendSwitch("enable-speech-dispatcher");
