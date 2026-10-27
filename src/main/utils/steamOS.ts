@@ -1,5 +1,5 @@
 /*
- * Vesktop, a desktop app aiming to give you a snappier Discord Experience
+ * Kernel, a desktop app aiming to give you a snappier Discord Experience
  * Copyright (c) 2023 Vendicated and Vencord contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -75,8 +75,8 @@ export async function askToApplySteamLayout(win: BrowserWindow) {
 
     // Touch screen breaks in some menus when native touch mode is enabled on latest SteamOS beta, remove most of the update specific text once that's fixed.
     const { response } = await dialog.showMessageBox(win, {
-        message: `${update ? "Update" : "Apply"} Vesktop Steam Input Layout?`,
-        detail: `Would you like to ${update ? "Update" : "Apply"} Vesktop's recommended Steam Deck controller settings?
+        message: `${update ? "Update" : "Apply"} Kernel Steam Input Layout?`,
+        detail: `Would you like to ${update ? "Update" : "Apply"} Kernel's recommended Steam Deck controller settings?
 ${update ? "Click yes using the touchpad" : "Tap yes"}, then press the X button or tap Apply Layout to confirm.${
             update ? " Doing so will undo any customizations you have made." : ""
         }
